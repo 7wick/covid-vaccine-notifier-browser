@@ -10,8 +10,7 @@ input_file.close()
 
 
 def get_centres(date, age, state_name, district_name):
-    state_id = get_state_id(state_name)
-    district_id = get_district_id(state_id, district_name)
+    district_id = get_state_id(state_name, district_name)
     try:
         response = requests.get(
             "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict",
@@ -30,13 +29,12 @@ def get_centres(date, age, state_name, district_name):
             html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3></body></html>".format(
                 html_head, total_available_centres)
             open_browser(html_template, open_cowin_site=True)
-    except:
-        err_msg = {'message': 'Unexpected Error. Kindly retry a couple of times!'}
-        html_template = "<html><body><h3>{}</h3></body></html>".format(err_msg['message'])
-        open_browser(html_template)
+    except Exception as err:
+        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file.write(str(err)+"\n")
 
 
-def get_state_id(state_name):
+def get_state_id(state_name, district_name):
     try:
         unchanged_states = ["Andaman and Nicobar Islands", "Dadra and Nagar Haveli", "Daman and Diu",
                             "Jammu and Kashmir"]
@@ -46,11 +44,11 @@ def get_state_id(state_name):
         states = json.loads(os.popen("curl --silent https://cdn-api.co-vin.in/api/v2/admin/location/states").read())[
             'states']
         state_id = next(item for item in states if item["state_name"] == state_name)['state_id']
-        return state_id
-    except:
-        err_msg = {'message': 'Invalid state_name. Enter it correctly!'}
-        html_template = "<html><body><h2>{}</h2></body></html>".format(err_msg['message'])
-        open_browser(html_template)
+        district_id = get_district_id(state_id, district_name)
+        return district_id
+    except Exception as err:
+        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file.write(str(err)+"\n")
 
 
 def get_district_id(state_id, district_name):
@@ -60,10 +58,9 @@ def get_district_id(state_id, district_name):
         district_id = next(item for item in districts if item["district_name"] == district_name.capitalize())[
             'district_id']
         return district_id
-    except:
-        err_msg = {'message': 'Invalid district_name. Enter it correctly!'}
-        html_template = "<html><body><h2>{}</h2></body></html>".format(err_msg['message'])
-        open_browser(html_template)
+    except Exception as err:
+        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file.write(str(err)+"\n")
 
 
 def open_browser(html_template, open_cowin_site=False):
