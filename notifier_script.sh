@@ -1,6 +1,7 @@
 #!/bin/bash
+set -euo pipefail
 
-cd $(find ~ -name "browser_vaccine_notifier" 2> /dev/null)
+cd $(find ~ -name "covid-vaccine-notifier-browser" 2> /dev/null)
 source venv_browser/bin/activate
 while true
 do
