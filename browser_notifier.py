@@ -29,7 +29,7 @@ def get_centres(date, age, state_name, district_name):
             html_head = 'Vaccines available now in this district, for the given age, in the next 7 days.'
             html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3></body></html>".format(
                 html_head, total_available_centres)
-            open_browser(html_template, open_cowin_site = True)
+            open_browser(html_template, open_cowin_site=True)
     except:
         err_msg = {'message': 'Unexpected Error. Kindly retry a couple of times!'}
         html_template = "<html><body><h3>{}</h3></body></html>".format(err_msg['message'])
@@ -67,11 +67,11 @@ def get_district_id(state_id, district_name):
 
 
 def open_browser(html_template, open_cowin_site=False):
-    f = open('/Users/saatwick.chandra/PycharmProjects/browser_vaccine_notifier/index.html', 'w')
+    f = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html', 'w+')
     f.write(html_template)
     f.close()
 
-    html_file = '/Users/saatwick.chandra/PycharmProjects/browser_vaccine_notifier/index.html'
+    html_file = '/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html'
     subprocess.call(['open', html_file])
 
     if open_cowin_site:

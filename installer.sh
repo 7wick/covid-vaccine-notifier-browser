@@ -10,4 +10,4 @@ echo "Activating your virtual environment"
 source venv_browser/bin/activate
 echo "Installing python modules"
 pip install -r requirements.txt
-echo "Setup done! Run teh nohup command"
+echo "Setup done!"
