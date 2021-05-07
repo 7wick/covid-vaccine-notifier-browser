@@ -1,7 +1,7 @@
-sh installer.sh   // to do the setup
+sh installer.sh   // install the dependencies
 
 nohup $(find ~ -name "notifier_script.sh" 2> /dev/null) &   // use to run the script in the background
 
 ps -ef | grep notifier_script.sh   // to get process id of the triggered process [Not important]
 
-kill -9 $(ps -ef | grep notifier_script.sh | awk '{print $2}')  // run to kill the process and stop the script.
+kill -9 $(ps -ef | grep notifier_script.sh | awk '{print $2}')  // run to kill the process and stop the script [Very important, else you will keep getting notifications]
