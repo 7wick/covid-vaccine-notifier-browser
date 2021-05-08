@@ -33,17 +33,18 @@ def get_centres(date, age, state_name, district_name):
             for details in centre["sessions"]:
                 if details['available_capacity'] > 0 and details["min_age_limit"] <= age:
                     total_available_slots += details['available_capacity']
-                    print("available_centres: {}".format(centre['name']))
                     available_centres.append(centre['name'])
                     total_available_centres += 1
         if total_available_centres > 0:
+            current_time = datetime.now().strftime("%H:%M:%S ")
+            print("At {} available centres were: {}".format(current_time, available_centres))
             html_head = 'Vaccines now available in {}, for the given age, in the next 7 days.'.format(district_name)
             html_template = "<html><body><h1>{}</h1>" \
                             "<h3>There are {} centres with {} available total slots.</h3>" \
                             "<p><b>Centres:</b> {}</p></body></html>"\
                 .format(html_head, total_available_centres, total_available_slots, available_centres)
             open_browser(html_template)
-            time.sleep(2)
+            time.sleep(5)
     except Exception as err:
         log_file = open(error_file, 'w+')
         log_file.write(str(err)+"\n")
