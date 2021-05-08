@@ -34,8 +34,10 @@ def get_centres(date, age, state_name, district_name):
                     total_available_centres += 1
         if total_available_centres > 0:
             html_head = 'Vaccines now available in {}, for the given age, in the next 7 days.'.format(district_name)
-            html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3><h2>{}</h2></body></html>". \
-                format(html_head, total_available_centres, available_centres)
+            html_template = "<html><body><h1>{}</h1>" \
+                            "<h3>Total available centres: {}</h3>" \
+                            "<p><b>Centres:</b> {}</p></body></html>"\
+                .format(html_head, total_available_centres, available_centres)
             open_browser(html_template)
     except Exception as err:
         log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
