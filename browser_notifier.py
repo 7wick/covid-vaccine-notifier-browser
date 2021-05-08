@@ -3,9 +3,14 @@ import requests
 import subprocess
 import json
 
-input_file = open('input.json', 'r')
-input_data = json.load(input_file)
-input_file.close()
+
+def entrypoint():
+    input_file = open('input.json', 'r')
+    input_data = json.load(input_file)
+    input_file.close()
+
+    today = datetime.today().strftime('%d-%m-%Y')
+    get_centres(today, int(input_data["age"]), input_data["state_name"], input_data["district_name"])
 
 
 def get_centres(date, age, state_name, district_name):
@@ -28,7 +33,7 @@ def get_centres(date, age, state_name, district_name):
             html_head = 'Vaccines available now in this district, for the given age, in the next 7 days.'
             html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3></body></html>".format(
                 html_head, total_available_centres)
-            open_browser(html_template, open_cowin_site=True)
+            open_browser(html_template)
     except Exception as err:
         log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
         log_file.write(str(err)+"\n")
@@ -66,18 +71,16 @@ def get_district_id(state_id, district_name):
         log_file.write(str(err)+"\n")
 
 
-def open_browser(html_template, open_cowin_site=False):
+def open_browser(html_template):
     f = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html', 'w+')
     f.write(html_template)
     f.close()
 
     html_file = '/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html'
+    cowin_url = "https://selfregistration.cowin.gov.in/"
+
+    subprocess.call(['open', cowin_url])
     subprocess.call(['open', html_file])
 
-    if open_cowin_site:
-        cowin_url = "https://selfregistration.cowin.gov.in/"
-        subprocess.call(['open', cowin_url])
 
-
-today = datetime.today().strftime('%d-%m-%Y')
-get_centres(today, int(input_data["age"]), input_data["state_name"], input_data["district_name"])
+entrypoint()
