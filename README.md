@@ -4,7 +4,7 @@ It will notify you when the vaccine is available. Since most of us are using the
 
 
 # Steps to run it on your mac/linux: (Working on the windows guide)
-1. Install python and pip (preffered: python3) *[follow: https://realpython.com/installing-python/]*
+1. Install python3 and pip3 (preffered: python3) *[follow: https://realpython.com/installing-python/]*
 2. Take a pull of the main branch of this github repository by running:\
    *git clone https://github.com/7wick/covid-vaccine-notifier-browser.git covid-vaccine-notifier-browser*
 3. Get into your directory:\
