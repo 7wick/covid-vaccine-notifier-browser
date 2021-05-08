@@ -90,10 +90,11 @@ def open_browser(html_template):
     subprocess.call(['open', html_file])
 
 
-if "covid-vaccine-notifier-browser" in os.getcwd():
+project_dir = "covid-vaccine-notifier-browser"
+if project_dir in os.getcwd():
     current_path = os.getcwd()
 else:
-    current_path = os.path.abspath("covid-vaccine-notifier-browser")
+    current_path = os.path.abspath(project_dir)
 
 error_file = os.path.join(current_path, "errors.txt")
 html_file = os.path.join(current_path, "index.html")
