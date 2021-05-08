@@ -2,6 +2,8 @@ from datetime import datetime
 import requests
 import subprocess
 import json
+import time
+import os
 
 
 def entrypoint():
@@ -39,8 +41,9 @@ def get_centres(date, age, state_name, district_name):
                             "<p><b>Centres:</b> {}</p></body></html>"\
                 .format(html_head, total_available_centres, available_centres)
             open_browser(html_template)
+            time.sleep(2)
     except Exception as err:
-        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file = open(error_file, 'w+')
         log_file.write(str(err)+"\n")
 
 
@@ -59,7 +62,7 @@ def get_state_id(state_name, district_name):
         district_id = get_district_id(state_id, district_name)
         return district_id
     except Exception as err:
-        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file = open(error_file, 'w+')
         log_file.write(str(err)+"\n")
 
 
@@ -72,20 +75,27 @@ def get_district_id(state_id, district_name):
             'district_id']
         return district_id
     except Exception as err:
-        log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
+        log_file = open(error_file, 'w+')
         log_file.write(str(err)+"\n")
 
 
 def open_browser(html_template):
-    f = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html', 'w+')
+    f = open(html_file, 'w+')
     f.write(html_template)
     f.close()
 
-    html_file = '/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/index.html'
     cowin_url = "https://selfregistration.cowin.gov.in/"
 
     subprocess.call(['open', cowin_url])
     subprocess.call(['open', html_file])
 
+
+if "covid-vaccine-notifier-browser" in os.getcwd():
+    current_path = os.getcwd()
+else:
+    current_path = os.path.abspath("covid-vaccine-notifier-browser")
+
+error_file = os.path.join(current_path, "errors.txt")
+html_file = os.path.join(current_path, "index.html")
 
 entrypoint()
