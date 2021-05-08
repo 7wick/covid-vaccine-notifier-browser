@@ -11,7 +11,7 @@ It will notify you when the vaccine is available. Since most of us are using the
    *cd covid-vaccine-notifier-browser*
 4. Insatll the dependencies:\
    *sh installer.sh*
-5. Update the input.json file, as per your requirements. **[Important, else you will get wrong information]**
+5. Update the input.json file, as per your requirements. **[Important, else you will get wrong information]**:\
 6. Run the bash script in the background:\
    *nohup $(find ~ -name "notifier_script.sh" 2> /dev/null) &*
 7. Kill the process and stop the script: **[Very important, else you will keep getting notifications]**\
