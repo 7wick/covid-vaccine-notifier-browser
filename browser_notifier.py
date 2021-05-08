@@ -25,14 +25,17 @@ def get_centres(date, age, state_name, district_name):
             headers={"User-Agent": "Chrome"}
         )
         total_available_centres = 0
+        available_centres = list()
         for centre in response.json()["centers"]:
             for details in centre["sessions"]:
                 if details['available_capacity'] > 0 and details["min_age_limit"] <= age:
+                    print("available_centre: {}".format(centre['name']))
+                    available_centres.append(centre['name'])
                     total_available_centres += 1
         if total_available_centres > 0:
-            html_head = 'Vaccines available now in this district, for the given age, in the next 7 days.'
-            html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3></body></html>".format(
-                html_head, total_available_centres)
+            html_head = 'Vaccines now available in {}, for the given age, in the next 7 days.'.format(district_name)
+            html_template = "<html><body><h1>{}</h1><h3>Total available centres: {}</h3><h2>{}</h2></body></html>". \
+                format(html_head, total_available_centres, available_centres)
             open_browser(html_template)
     except Exception as err:
         log_file = open('/Users/saatwick.chandra/PycharmProjects/covid-vaccine-notifier-browser/errors.txt', 'w+')
