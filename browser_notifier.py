@@ -27,21 +27,25 @@ def get_centres(date, age, state_name, district_name):
             headers={"User-Agent": "Chrome"}
         )
         total_available_centres = 0
+        total_available_slots = 0
         available_centres = list()
         for centre in response.json()["centers"]:
             for details in centre["sessions"]:
                 if details['available_capacity'] > 0 and details["min_age_limit"] <= age:
-                    print("available_centre: {}".format(centre['name']))
-                    available_centres.append(centre['name'])
+                    total_available_slots += details['available_capacity']
+                    available_centres.append(centre['name']+" ({})".format(details['available_capacity']))
                     total_available_centres += 1
         if total_available_centres > 0:
-            html_head = 'Vaccines now available in {}, for the given age, in the next 7 days.'.format(district_name)
+            current_time = datetime.now().strftime("%H:%M:%S")
+            print("At {}, {} slots on {} centres: {}".format(current_time, total_available_slots,
+                                                             total_available_centres, available_centres))
+            html_head = 'Vaccines are now available in {}, for {} years, in the next 7 days.'.format(district_name, age)
             html_template = "<html><body><h1>{}</h1>" \
-                            "<h3>Total available centres: {}</h3>" \
+                            "<h3>There are {} centres with {} available total slots.</h3>" \
                             "<p><b>Centres:</b> {}</p></body></html>"\
-                .format(html_head, total_available_centres, available_centres)
+                .format(html_head, total_available_centres, total_available_slots, available_centres)
             open_browser(html_template)
-            time.sleep(2)
+            time.sleep(5)
     except Exception as err:
         log_file = open(error_file, 'w+')
         log_file.write(str(err)+"\n")
