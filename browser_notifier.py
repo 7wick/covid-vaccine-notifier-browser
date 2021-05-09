@@ -30,15 +30,17 @@ def get_centres(date, age, state_name, district_name):
         total_available_slots = 0
         available_centres = list()
         for centre in response.json()["centers"]:
+            pin = centre["pincode"]
             for details in centre["sessions"]:
                 if details['available_capacity'] > 0 and details["min_age_limit"] <= age:
                     total_available_slots += details['available_capacity']
-                    available_centres.append(centre['name'])
+                    available_centres.append(centre['name']+": ( {} @ {} )".format(details['available_capacity'], pin))
                     total_available_centres += 1
         if total_available_centres > 0:
-            current_time = datetime.now().strftime("%H:%M:%S ")
-            print("At {} available centres were: {}".format(current_time, available_centres))
-            html_head = 'Vaccines now available in {}, for the given age, in the next 7 days.'.format(district_name)
+            current_time = datetime.now().strftime("%H:%M:%S")
+            print("At {}, {} slots on {} centres: {}".format(current_time, total_available_slots,
+                                                             total_available_centres, available_centres))
+            html_head = 'Vaccines are now available in {}, for {} years, in the next 7 days.'.format(district_name, age)
             html_template = "<html><body><h1>{}</h1>" \
                             "<h3>There are {} centres with {} available total slots.</h3>" \
                             "<p><b>Centres:</b> {}</p></body></html>"\
