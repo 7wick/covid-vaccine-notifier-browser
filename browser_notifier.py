@@ -30,11 +30,10 @@ def get_centres(date, age, state_name, district_name):
         total_available_slots = 0
         available_centres = list()
         for centre in response.json()["centers"]:
-            pin = centre["pincode"]
             for details in centre["sessions"]:
                 if details['available_capacity'] > 0 and details["min_age_limit"] <= age:
                     total_available_slots += details['available_capacity']
-                    available_centres.append(centre['name']+": ( {} @ {} )".format(details['available_capacity'], pin))
+                    available_centres.append(centre['name']+" ({})".format(details['available_capacity']))
                     total_available_centres += 1
         if total_available_centres > 0:
             current_time = datetime.now().strftime("%H:%M:%S")
