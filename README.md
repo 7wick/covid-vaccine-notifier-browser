@@ -1,15 +1,19 @@
+# PRD (Product Requirement Documentation) of the project:
+https://github.com/7wick/covid-vaccine-notifier-browser/raw/main/PRD_%20%20covid%20vaccine%20notifier.pdf
+
+
 # Description:
 
 It will notify you when the vaccine is available. Since most of us are using the laptop for the entire day, it will open a tab in your browser to the registration portal directly, as soon as vaccine is available for your age in your district.
 
 
 # Steps to run it on your mac/linux: (Working on the windows guide)
-1. Install python3 and pip3 (preffered: python3) *[follow: https://realpython.com/installing-python/]*
+1. Install python3 and pip3 (preferred: python3) *[follow: https://realpython.com/installing-python/]*
 2. Take a pull of the main branch of this github repository by running:\
    *git clone https://github.com/7wick/covid-vaccine-notifier-browser.git covid-vaccine-notifier-browser*
 3. Get into your directory:\
    *cd covid-vaccine-notifier-browser*
-4. Insatll the dependencies:\
+4. Install the dependencies:\
    *sh installer.sh*
 5. Update the input.json file, as per your requirements. **[Important, else you will get wrong information]**:\
    *vi input.json*\
@@ -31,4 +35,4 @@ It will notify you when the vaccine is available. Since most of us are using the
 4. git checkout main
 5. git pull
 
-**Note:** You need to re-edit you input.json file after these step, else you will get wrong information. Follow from step 5 and 6 above
+**Note:** You need to re-edit your input.json file after these steps, else you will get wrong information. Follow from step 5 and 6 above
